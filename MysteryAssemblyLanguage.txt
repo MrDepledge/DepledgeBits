@@ -1,0 +1,70 @@
+MOV R0, #2
+MOV R1, #0
+MOV R2, #0
+
+M:
+MOV R5, #1
+
+CMP R0, #2
+BEQ PD
+
+AND R7, R0, #1
+CMP R7, #0
+BEQ NP
+
+MOV R3, #2
+
+DL:
+CMP R3, R0
+BEQ PD
+
+MOV R4, R0
+
+ML:
+SUB R4, R4, R3
+CMP R4, #0
+BEQ NP
+BLT ND
+B ML
+
+ND:
+ADD R3, R3, #1
+B DL
+
+NP:
+MOV R5, #0
+
+PD:
+CMP R5, #1
+BNE NC
+
+CMP R1, #0
+BEQ FP
+
+SUB R6, R0, R2
+OUT R6
+
+MOV R2, R0
+ADD R1, R1, #1
+
+CMP R1, #20
+BEQ E
+B NC
+
+FP:
+MOV R2, R0
+ADD R1, R1, #1
+B NC
+
+NC:
+CMP R0, #2
+BEQ ST
+ADD R0, R0, #2
+B M
+
+ST:
+MOV R0, #3
+B M
+
+E:
+HALT
